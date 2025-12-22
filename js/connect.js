@@ -183,33 +183,13 @@ async function switchNetwork(networkKey) {
     }
 }
 
-// Quick switch functions for common networks
+// Quick switch functions
 async function switchToMainnet() {
     return await switchNetwork('ethereum');
 }
 
 async function switchToSepolia() {
     return await switchNetwork('sepolia');
-}
-
-async function switchToGoerli() {
-    return await switchNetwork('goerli');
-}
-
-async function switchToPolygon() {
-    return await switchNetwork('polygon');
-}
-
-async function switchToBSC() {
-    return await switchNetwork('bsc');
-}
-
-async function switchToArbitrum() {
-    return await switchNetwork('arbitrum');
-}
-
-async function switchToOptimism() {
-    return await switchNetwork('optimism');
 }
 
 // Get list of available networks for UI dropdown
