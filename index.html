@@ -120,6 +120,23 @@
                 <h3 class="text-white font-semibold mb-4 flex items-center gap-2">
                     <i class="fas fa-history text-purple-400"></i> Transaction History
                 </h3>
+                
+                <!-- Filters -->
+                <div id="tx-filters" class="flex flex-wrap gap-2 mb-4" style="display: none;">
+                    <button onclick="applyFilter('all')" data-filter="all" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-purple-500 text-white transition-all">
+                        <i class="fas fa-list mr-1"></i> All
+                    </button>
+                    <button onclick="applyFilter('mine')" data-filter="mine" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-gray-700 text-gray-300 hover:bg-gray-600 transition-all">
+                        <i class="fas fa-user mr-1"></i> My Txns
+                    </button>
+                    <button onclick="applyFilter('success')" data-filter="success" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-gray-700 text-gray-300 hover:bg-gray-600 transition-all">
+                        <i class="fas fa-check mr-1"></i> Success
+                    </button>
+                    <button onclick="applyFilter('failed')" data-filter="failed" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-gray-700 text-gray-300 hover:bg-gray-600 transition-all">
+                        <i class="fas fa-times mr-1"></i> Failed
+                    </button>
+                </div>
+                
                 <div id="tx-loading" class="text-center py-4">
                     <i class="fas fa-spinner fa-spin text-purple-400"></i>
                     <span class="text-gray-400 text-sm ml-2">Loading...</span>
@@ -127,6 +144,10 @@
                 <div id="tx-list" class="space-y-3" style="display: none;"></div>
                 <div id="tx-empty" class="text-center py-4 text-gray-500 text-sm" style="display: none;">
                     No transactions yet
+                </div>
+                
+                <!-- Pagination -->
+                <div id="tx-pagination" class="flex items-center justify-center gap-2 mt-4" style="display: none;">
                 </div>
             </div>
         </div>

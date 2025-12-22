@@ -34,7 +34,9 @@ function init() {
         // History
         txLoading: document.getElementById('tx-loading'),
         txList: document.getElementById('tx-list'),
-        txEmpty: document.getElementById('tx-empty')
+        txEmpty: document.getElementById('tx-empty'),
+        txPagination: document.getElementById('tx-pagination'),
+        txFilters: document.getElementById('tx-filters')
     };
 
     checkMetaMask();
