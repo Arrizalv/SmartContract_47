@@ -3,191 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo Praktikum Web3 - Connect Wallet</title>
-    
-    <!-- Tailwind CSS CDN -->
+    <title>Simple Storage DApp</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
 </head>
-<body class="bg-gray-100 text-gray-800 leading-relaxed p-5 max-w-7xl mx-auto">
-    <!-- Header -->
-    <header class="text-center mb-8 pb-5 border-b-2 border-blue-500 fade-in">
-        <h1 class="text-blue-500 mb-3 text-4xl md:text-5xl font-bold flex items-center justify-center gap-3">
-            <i class="fas fa-cube"></i> Demo Praktikum Web3
-        </h1>
-        <p class="text-gray-600 text-lg md:text-xl">Connect Wallet dengan MetaMask & Sepolia Testnet</p>
-        <div id="global-status" class="mt-3 inline-block px-4 py-1 rounded-full font-bold text-sm bg-gray-100 text-gray-600">
-            Disconnected
-        </div>
-    </header>
-    
-    <!-- Info Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-        <!-- Web3 Info Card -->
-        <div class="bg-white rounded-xl p-6 shadow-lg card-hover fade-in">
-            <h2 class="text-blue-500 mb-4 text-2xl font-bold flex items-center gap-3">
-                <i class="fas fa-info-circle text-2xl"></i> Apa itu Web3?
-            </h2>
-            <p class="mb-4 text-gray-700">Web3 adalah generasi baru internet yang berbasis blockchain dengan karakteristik:</p>
-            <ul class="space-y-3 pl-5 list-none">
-                <li class="flex items-start gap-2">
-                    <i class="fas fa-check-circle text-green-500 mt-1"></i>
-                    <span><strong class="text-gray-900">Desentralisasi:</strong> Data tersimpan di banyak komputer (node)</span>
-                </li>
-                <li class="flex items-start gap-2">
-                    <i class="fas fa-check-circle text-green-500 mt-1"></i>
-                    <span><strong class="text-gray-900">Kepemilikan Data:</strong> Pengguna memiliki kendali penuh atas datanya</span>
-                </li>
-                <li class="flex items-start gap-2">
-                    <i class="fas fa-check-circle text-green-500 mt-1"></i>
-                    <span><strong class="text-gray-900">Login dengan Wallet:</strong> Tidak perlu username/password tradisional</span>
-                </li>
-                <li class="flex items-start gap-2">
-                    <i class="fas fa-check-circle text-green-500 mt-1"></i>
-                    <span><strong class="text-gray-900">Transaksi Tanpa Pihak Ketiga:</strong> Smart contract menggantikan perantara</span>
-                </li>
-            </ul>
-        </div>
+<body class="bg-gray-900 text-white min-h-screen">
+    <div class="max-w-lg mx-auto px-4 py-8">
         
-        <!-- Tools Card -->
-        <div class="bg-white rounded-xl p-6 shadow-lg card-hover fade-in">
-            <h2 class="text-blue-500 mb-4 text-2xl font-bold flex items-center gap-3">
-                <i class="fas fa-tools text-2xl"></i> Tools yang Diperlukan
-            </h2>
-            <div class="space-y-4">
-                <div class="pl-3 border-l-4 border-blue-500 py-2">
-                    <span class="inline-flex items-center justify-center bg-blue-500 text-white w-8 h-8 rounded-full font-bold mr-3">1</span>
-                    <strong class="text-gray-900">MetaMask:</strong> Wallet untuk menyimpan kripto & login
-                </div>
-                <div class="pl-3 border-l-4 border-blue-500 py-2">
-                    <span class="inline-flex items-center justify-center bg-blue-500 text-white w-8 h-8 rounded-full font-bold mr-3">2</span>
-                    <strong class="text-gray-900">Sepolia Testnet:</strong> Jaringan Ethereum untuk uji coba
-                </div>
-                <div class="pl-3 border-l-4 border-blue-500 py-2">
-                    <span class="inline-flex items-center justify-center bg-blue-500 text-white w-8 h-8 rounded-full font-bold mr-3">3</span>
-                    <strong class="text-gray-900">Faucet:</strong> Sumber ETH gratis untuk transaksi uji
-                </div>
+        <!-- Header -->
+        <header class="text-center my-8">
+            <h1 class="text-3xl font-bold mb-2 flex items-center justify-center gap-3">
+                <i class="fas fa-cube text-purple-400"></i> Simple Storage
+            </h1>
+            <p class="text-gray-400 text-sm my-2">Smart Contract on Sepolia</p>
+            <div id="global-status" class="my-2 inline-block px-3 py-1 rounded-full text-sm bg-gray-700 text-gray-300">
+                Disconnected
             </div>
-        </div>
-    </div>
-    
-    <!-- Warning Box -->
-    <div class="bg-yellow-50 border-l-4 border-yellow-500 p-5 my-6 rounded-lg shadow-md fade-in">
-        <h3 class="text-yellow-700 font-bold mb-2 text-lg flex items-center gap-2">
-            <i class="fas fa-exclamation-triangle"></i> Peringatan Penting!
-        </h3>
-        <p class="text-yellow-800">
-            Jangan pernah membagikan <strong>Secret Recovery Phrase (12 kata)</strong> kepada siapa pun! 
-            Simpan di tempat yang aman. Di jaringan mainnet, kehilangan frase ini berarti kehilangan 
-            akses ke wallet dan aset kripto Anda selamanya.
-        </p>
-    </div>
-    
-    <!-- Connect Section -->
-    <div id="connect-section" class="text-center my-8">
-        <h2 class="text-blue-500 mb-5 text-3xl font-bold">Connect Wallet ke Website</h2>
-        <p class="mb-5 text-gray-700 text-lg">Klik tombol di bawah untuk menghubungkan wallet MetaMask Anda:</p>
-        
-        <div class="flex justify-center gap-4 mt-5 flex-wrap">
-            <button id="connectButton" class="bg-blue-500 text-white border-none px-10 py-4 text-xl rounded-full cursor-pointer font-bold inline-flex items-center gap-3 shadow-lg btn-transition hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed">
-                <i class="fas fa-plug"></i> Connect MetaMask Wallet
+        </header>
+
+        <!-- Connect Button -->
+        <div class="text-center mb-6">
+            <button id="connectButton" class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-xl font-semibold inline-flex items-center gap-2 transition-all">
+                <i class="fas fa-plug"></i> Connect Wallet
             </button>
-            
-            <button id="disconnectButton" class="bg-red-100 text-red-600 border-2 border-red-200 px-8 py-4 text-xl rounded-full cursor-pointer font-bold inline-flex items-center gap-3 btn-transition hover:bg-red-200 hover:border-red-300" style="display: none;">
+            <button id="disconnectButton" class="bg-red-500/20 text-red-400 border border-red-500/50 px-6 py-3 rounded-xl font-semibold inline-flex items-center gap-2 hover:bg-red-500/30 transition-all" style="display: none;">
                 <i class="fas fa-power-off"></i> Disconnect
             </button>
         </div>
-        
-        <div id="status-message" class="mt-4 min-h-6"></div>
-        
-        <!-- Connected State -->
-        <div id="wallet-info" class="bg-white rounded-xl p-6 mt-8 shadow-lg text-left max-w-2xl mx-auto" style="display: none;">
-            <h2 class="text-green-500 mb-4 text-2xl font-bold flex items-center gap-2">
-                <i class="fas fa-check-circle"></i> Wallet Terhubung!
-            </h2>
-            <div class="space-y-3">
-                <div class="p-3 bg-gray-50 rounded-lg">
-                    <div class="font-bold text-gray-600 mb-1">Alamat Wallet:</div>
-                    <div id="address-display" class="text-gray-900 break-all font-mono text-sm"></div>
-                </div>
-                <div class="p-3 bg-gray-50 rounded-lg">
-                    <div class="font-bold text-gray-600 mb-1">Jaringan:</div>
-                    <div id="network-display" class="text-gray-900 font-mono text-sm"></div>
-                </div>
-                <div class="p-3 bg-gray-50 rounded-lg">
-                    <div class="font-bold text-gray-600 mb-1">Saldo:</div>
-                    <div id="balance-display" class="text-gray-900 font-mono text-sm">Memuat...</div>
-                </div>
-                <div class="p-3 bg-gray-50 rounded-lg">
-                    <div class="font-bold text-gray-600 mb-1">Status:</div>
-                    <div id="status-display" class="text-green-500 font-bold">Connected</div>
-                </div>
+
+        <div id="status-message" class="text-center mb-6 min-h-6"></div>
+
+        <!-- Wallet Info Card -->
+        <div id="wallet-info" class="bg-gray-800 rounded-2xl p-6 shadow-xl mb-6" style="display: none;">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-green-400 text-lg font-bold flex items-center gap-2">
+                    <i class="fas fa-check-circle"></i> Connected
+                </h2>
+                <div id="network-display" class="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded-full"></div>
             </div>
             
-            <!-- Network Switcher -->
-            <div class="mt-5 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
-                <h3 class="font-bold text-blue-800 mb-3 flex items-center gap-2">
-                    <i class="fas fa-network-wired"></i> Ganti Jaringan
-                </h3>
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <select id="network-selector" class="flex-1 px-4 py-2 border border-blue-300 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
-                        <option value="">-- Pilih Jaringan --</option>
-                        <option value="sepolia">Sepolia Testnet (Recommended)</option>
-                        <option value="mainnet">Ethereum Mainnet</option>
-                        <option value="goerli">Goerli Testnet</option>
-                        <option value="polygon">Polygon Mainnet</option>
-                    </select>
-                    <button id="switch-network-btn" class="px-6 py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-200 flex items-center justify-center gap-2 whitespace-nowrap">
-                        <i class="fas fa-exchange-alt"></i> Switch Network
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-gray-700/50 rounded-lg p-3">
+                    <div class="text-gray-400 text-xs mb-1">Address</div>
+                    <div id="address-display" class="text-white font-mono text-xs truncate"></div>
+                </div>
+                <div class="bg-gray-700/50 rounded-lg p-3">
+                    <div class="text-gray-400 text-xs mb-1">Balance</div>
+                    <div id="balance-display" class="text-white font-medium text-sm">0 ETH</div>
+                </div>
+            </div>
+            <div id="status-display" class="hidden">Connected</div>
+        </div>
+
+        <!-- Smart Contract Section -->
+        <div id="contract-section" class="space-y-4" style="display: none;">
+            
+            <!-- Current Value Display -->
+            <div class="bg-gradient-to-r from-purple-900/50 to-blue-900/50 rounded-2xl p-6 border border-purple-500/30">
+                <div class="text-center">
+                    <div class="text-gray-400 text-sm mb-2">Stored Number</div>
+                    <div id="stored-value" class="text-5xl font-bold text-white mb-4">-</div>
+                    <button id="retrieveBtn" class="bg-purple-500/20 text-purple-300 px-4 py-2 rounded-lg text-sm hover:bg-purple-500/30 transition-all inline-flex items-center gap-2">
+                        <i class="fas fa-sync-alt"></i> Refresh
                     </button>
                 </div>
-                <p class="text-xs text-blue-700 mt-2">
-                    <i class="fas fa-info-circle"></i> Pilih jaringan dan klik tombol untuk beralih ke jaringan lain.
-                </p>
             </div>
-            
-            <div class="mt-5 p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
-                <p class="font-bold text-green-800 mb-2">Siap untuk Praktikum!</p>
-                <p class="text-green-700 text-sm">
-                    Sekarang Anda bisa mencoba transaksi di Sepolia testnet. Gunakan ETH dari faucet untuk membayar gas fee.
-                </p>
-                <p class="mt-3 text-sm">
-                    <a href="https://cloud.google.com/application/web3/faucet/ethereum/sepolia" target="_blank" class="text-blue-500 hover:text-blue-700 underline inline-flex items-center gap-2">
-                        <i class="fas fa-faucet"></i> Dapatkan ETH gratis dari Google Faucet
-                    </a>
-                </p>
-            </div>
-        </div>
-        
-        <!-- Disconnected State -->
-        <div id="disconnected-state" class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl py-10 px-5 mt-5 text-center max-w-2xl mx-auto">
-            <i class="fas fa-wallet text-5xl text-gray-400 mb-4"></i>
-            <h3 class="text-gray-500 mb-3 text-xl font-semibold">Wallet Belum Terhubung</h3>
-            <p class="text-gray-400 max-w-lg mx-auto mb-5">
-                Klik tombol "Connect MetaMask Wallet" di atas untuk menghubungkan wallet Anda ke website ini. 
-                Setelah terhubung, informasi wallet akan ditampilkan di sini.
-            </p>
-            <div class="text-sm text-gray-500 mt-4">
-                <p class="flex items-center justify-center gap-2">
-                    <i class="fas fa-lightbulb"></i> 
-                    Pastikan MetaMask sudah terinstall dan Anda sudah login ke akun MetaMask Anda.
-                </p>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Footer -->
-    <footer class="text-center mt-8 pt-5 border-t border-gray-300 text-gray-600 text-sm">
-        <p class="mb-2 font-semibold">Demo Praktikum Web3 - Untuk Keperluan Edukasi | Asisten Praktikum Pemrograman Web</p>
-        <p>Pastikan MetaMask terinstall dan terhubung ke Sepolia Testnet untuk pengalaman terbaik</p>
-    </footer>
 
-    <!-- JavaScript -->
+            <!-- Store New Value -->
+            <div class="bg-gray-800 rounded-2xl p-6">
+                <h3 class="text-white font-semibold mb-4 flex items-center gap-2">
+                    <i class="fas fa-save text-blue-400"></i> Store New Number
+                </h3>
+                <div class="flex gap-3">
+                    <input 
+                        type="number" 
+                        id="numberInput" 
+                        placeholder="Enter a number"
+                        class="flex-1 bg-gray-700 border border-gray-600 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                    <button id="storeBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold transition-all flex items-center gap-2">
+                        <i class="fas fa-paper-plane"></i> Store
+                    </button>
+                </div>
+                <p class="text-gray-500 text-xs mt-3">
+                    <i class="fas fa-gas-pump"></i> This transaction requires gas fee
+                </p>
+            </div>
+
+            <!-- Contract Info -->
+            <div class="bg-gray-800/50 rounded-xl p-4 text-center">
+                <div class="text-gray-500 text-xs">Contract Address</div>
+                <a href="https://sepolia.etherscan.io/address/0x723C53af5D645f15FcE4884C65202354F369977f" target="_blank" class="text-blue-400 text-xs font-mono hover:text-blue-300 break-all">
+                    0x723C53af5D645f15FcE4884C65202354F369977f
+                </a>
+            </div>
+
+            <!-- Transaction History -->
+            <div class="bg-gray-800 rounded-2xl p-6">
+                <h3 class="text-white font-semibold mb-4 flex items-center gap-2">
+                    <i class="fas fa-history text-purple-400"></i> Transaction History
+                </h3>
+                <div id="tx-loading" class="text-center py-4">
+                    <i class="fas fa-spinner fa-spin text-purple-400"></i>
+                    <span class="text-gray-400 text-sm ml-2">Loading...</span>
+                </div>
+                <div id="tx-list" class="space-y-3" style="display: none;"></div>
+                <div id="tx-empty" class="text-center py-4 text-gray-500 text-sm" style="display: none;">
+                    No transactions yet
+                </div>
+            </div>
+        </div>
+
+        <!-- Disconnected State -->
+        <div id="disconnected-state" class="bg-gray-800/50 border border-dashed border-gray-600 rounded-2xl py-12 px-6 text-center">
+            <i class="fas fa-wallet text-4xl text-gray-500 mb-4"></i>
+            <p class="text-gray-400">Connect your MetaMask wallet to interact with the contract</p>
+        </div>
+
+    </div>
+
+    <!-- Scripts (order matters!) -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/connect.js"></script>
+    <script src="js/contract.js"></script>
+    <script src="js/history.js"></script>
     <script src="js/wallet.js"></script>
 </body>
 </html>
