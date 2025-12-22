@@ -29,6 +29,7 @@ function init() {
         
         // Inputs
         numberInput: document.getElementById('numberInput'),
+        networkSelector: document.getElementById('network-selector'),
         
         // History
         txLoading: document.getElementById('tx-loading'),

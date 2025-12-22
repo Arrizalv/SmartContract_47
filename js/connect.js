@@ -15,6 +15,9 @@ async function connectWallet() {
         currentAddress = accounts[0];
         isConnected = true;
 
+        // Get current network
+        await detectCurrentNetwork();
+
         // Update UI
         elements.walletInfo.style.display = 'block';
         elements.contractSection.style.display = 'block';
@@ -23,7 +26,7 @@ async function connectWallet() {
         elements.disconnectBtn.style.display = 'inline-flex';
         
         elements.addressDisplay.textContent = currentAddress;
-        elements.networkDisplay.textContent = CONFIG.NETWORK;
+        elements.networkDisplay.textContent = currentNetwork ? currentNetwork.chainName : CONFIG.NETWORK;
         
         updateGlobalStatus(true);
         showMessage('', 'info');
@@ -35,7 +38,7 @@ async function connectWallet() {
 
         // Listen for account/network changes
         window.ethereum.on('accountsChanged', handleAccountChange);
-        window.ethereum.on('chainChanged', () => window.location.reload());
+        window.ethereum.on('chainChanged', handleNetworkChange);
 
     } catch (error) {
         console.error('Connect error:', error);
@@ -67,6 +70,158 @@ function handleAccountChange(accounts) {
     }
 }
 
+// ==================== NETWORK SWITCHING ====================
+
+async function detectCurrentNetwork() {
+    try {
+        const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+        currentNetwork = getNetworkByChainId(chainId);
+        
+        if (currentNetwork) {
+            elements.networkDisplay.textContent = currentNetwork.chainName;
+            updateNetworkSelector(currentNetwork.key);
+            console.log('Current network:', currentNetwork.chainName);
+        } else {
+            elements.networkDisplay.textContent = `Unknown (${chainId})`;
+            console.log('Unknown network with chainId:', chainId);
+        }
+        
+        return currentNetwork;
+    } catch (error) {
+        console.error('Error detecting network:', error);
+        return null;
+    }
+}
+
+function getNetworkByChainId(chainId) {
+    for (const [key, network] of Object.entries(NETWORKS)) {
+        if (network.chainId.toLowerCase() === chainId.toLowerCase()) {
+            return { ...network, key };
+        }
+    }
+    return null;
+}
+
+function updateNetworkSelector(networkKey) {
+    if (elements.networkSelector) {
+        elements.networkSelector.value = networkKey;
+    }
+}
+
+async function handleNetworkChange(chainId) {
+    console.log('Network changed to:', chainId);
+    currentNetwork = getNetworkByChainId(chainId);
+    
+    if (currentNetwork) {
+        elements.networkDisplay.textContent = currentNetwork.chainName;
+        updateNetworkSelector(currentNetwork.key);
+        showMessage(`Switched to ${currentNetwork.chainName}`, 'info');
+    } else {
+        elements.networkDisplay.textContent = `Unknown (${chainId})`;
+        showMessage('Switched to unknown network', 'info');
+    }
+    
+    // Refresh balance and data for new network
+    if (isConnected) {
+        await updateBalance();
+    }
+}
+
+async function switchNetwork(networkKey) {
+    const network = NETWORKS[networkKey];
+    
+    if (!network) {
+        showMessage('Network not found', 'error');
+        return false;
+    }
+    
+    try {
+        showMessage(`Switching to ${network.chainName}...`, 'info');
+        
+        // Try to switch to the network
+        await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: network.chainId }]
+        });
+        
+        showMessage(`Switched to ${network.chainName}`, 'info');
+        return true;
+        
+    } catch (switchError) {
+        // Error code 4902 means the chain is not added to MetaMask
+        if (switchError.code === 4902) {
+            try {
+                showMessage(`Adding ${network.chainName} to MetaMask...`, 'info');
+                
+                await window.ethereum.request({
+                    method: 'wallet_addEthereumChain',
+                    params: [{
+                        chainId: network.chainId,
+                        chainName: network.chainName,
+                        nativeCurrency: network.nativeCurrency,
+                        rpcUrls: network.rpcUrls,
+                        blockExplorerUrls: network.blockExplorerUrls
+                    }]
+                });
+                
+                showMessage(`Added and switched to ${network.chainName}`, 'info');
+                return true;
+                
+            } catch (addError) {
+                console.error('Error adding network:', addError);
+                showMessage(`Failed to add ${network.chainName}`, 'error');
+                return false;
+            }
+        } else if (switchError.code === 4001) {
+            showMessage('Network switch rejected by user', 'error');
+            return false;
+        } else {
+            console.error('Error switching network:', switchError);
+            showMessage('Failed to switch network', 'error');
+            return false;
+        }
+    }
+}
+
+// Quick switch functions for common networks
+async function switchToMainnet() {
+    return await switchNetwork('ethereum');
+}
+
+async function switchToSepolia() {
+    return await switchNetwork('sepolia');
+}
+
+async function switchToGoerli() {
+    return await switchNetwork('goerli');
+}
+
+async function switchToPolygon() {
+    return await switchNetwork('polygon');
+}
+
+async function switchToBSC() {
+    return await switchNetwork('bsc');
+}
+
+async function switchToArbitrum() {
+    return await switchNetwork('arbitrum');
+}
+
+async function switchToOptimism() {
+    return await switchNetwork('optimism');
+}
+
+// Get list of available networks for UI dropdown
+function getAvailableNetworks() {
+    return Object.entries(NETWORKS).map(([key, network]) => ({
+        key,
+        name: network.chainName,
+        chainId: network.chainId,
+        symbol: network.nativeCurrency.symbol
+    }));
+}
+
 async function updateBalance() {
     try {
         const balance = await window.ethereum.request({
@@ -75,7 +230,8 @@ async function updateBalance() {
         });
         
         const eth = parseInt(balance, 16) / 1e18;
-        elements.balanceDisplay.textContent = `${eth.toFixed(4)} ETH`;
+        const symbol = currentNetwork ? currentNetwork.nativeCurrency.symbol : 'ETH';
+        elements.balanceDisplay.textContent = `${eth.toFixed(4)} ${symbol}`;
     } catch (error) {
         elements.balanceDisplay.textContent = 'Error';
     }

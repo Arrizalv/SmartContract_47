@@ -53,6 +53,30 @@
                     <div id="balance-display" class="text-white font-medium text-sm">0 ETH</div>
                 </div>
             </div>
+
+            <!-- Network Switcher -->
+            <div class="mt-4 bg-gray-700/50 rounded-lg p-3">
+                <div class="text-gray-400 text-xs mb-2 flex items-center gap-2">
+                    <i class="fas fa-network-wired"></i> Switch Network
+                </div>
+                <select id="network-selector" onchange="switchNetwork(this.value)" class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-pointer">
+                    <optgroup label="Mainnet">
+                        <option value="ethereum">🔷 Ethereum Mainnet</option>
+                    </optgroup>
+                    <optgroup label="Testnet">
+                        <option value="sepolia" selected>🧪 Sepolia Testnet</option>
+                        <option value="goerli">🧪 Goerli Testnet</option>
+                        <option value="holesky">🧪 Holesky Testnet</option>
+                    </optgroup>
+                    <optgroup label="Layer 2 / Sidechain">
+                        <option value="polygon">💜 Polygon</option>
+                        <option value="bsc">💛 BNB Smart Chain</option>
+                        <option value="arbitrum">🔵 Arbitrum One</option>
+                        <option value="optimism">🔴 Optimism</option>
+                    </optgroup>
+                </select>
+            </div>
+
             <div id="status-display" class="hidden">Connected</div>
         </div>
 
