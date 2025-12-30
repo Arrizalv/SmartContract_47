@@ -172,16 +172,3 @@ Saat Anda memanggil `store(42)`, JavaScript melakukan encoding fungsi ke dalam H
 </p>
 
 ```
-
------
-
-### Apa yang Ditambahkan?
-
-1.  **Mermaid Diagram Flow:** Menjelaskan alur dari User ke Blockchain secara visual.
-2.  **Badges Modern:** Menggunakan skema warna yang konsisten (Biru-Kuning).
-3.  **RPC Method Analysis:** Memberikan penjelasan teknis tentang apa yang terjadi di balik layar (JavaScript `eth_call` vs `eth_sendTransaction`).
-4.  **Struktur Markdown yang Rapi:** Menggunakan *Blockquotes*, *Code Blocks*, dan *Tables* untuk keterbacaan tinggi.
-
-**Langkah selanjutnya:** Kamu bisa menyalin kode di atas ke file `README.md` di folder proyekmu. Apakah kamu ingin saya menambahkan bagian penjelasan teknis tentang **ABI** secara lebih mendetail?
-
-```
