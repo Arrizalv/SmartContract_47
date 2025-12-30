@@ -1,10 +1,4 @@
-Tentu, ini adalah kode **README.md** versi lengkap dengan tema **Modern Blue-Yellow (Cyber)** yang mencakup seluruh konten dari draf awal kamu, namun dengan format yang jauh lebih epik, bersih, dan terstruktur.
-
-Silakan salin kode di bawah ini:
-
----
-
-```markdown
+markdown
 # <p align="center">🔷 SIMPLE STORAGE DApp ⚡</p>
 <p align="center">
   <i align="center">Decentralized Storage Demo for Web3 Education</i>
@@ -38,7 +32,7 @@ Aplikasi ini tidak membutuhkan server database (SQL/NoSQL) tradisional. Data dis
 
 
 
-```mermaid
+mermaid
 graph TD
     User((👤 User)) -- Interaction --> UI[index.html / JS]
     UI -- Request --> MM{🦊 MetaMask}
@@ -49,8 +43,6 @@ graph TD
     style UI fill:#0052FF,stroke:#FFD700,color:#fff
     style MM fill:#FFD700,stroke:#0052FF
     style BC fill:#0052FF,stroke:#FFD700,color:#fff
-
-```
 
 ---
 
