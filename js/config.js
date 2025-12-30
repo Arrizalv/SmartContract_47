@@ -1,9 +1,9 @@
 // ==================== CONFIG ====================
 const CONFIG = {
-    CONTRACT_ADDRESS: '0x44777ef3E43777695AEE808bD2e2e9fF4Aee114F',
+    CONTRACT_ADDRESS: 'Enter Your Contract Address Here',
     // Etherscan API V2 - unified endpoint for all chains
     ETHERSCAN_API: 'https://api.etherscan.io/v2/api',
-    ETHERSCAN_API_KEY: 'BF6R34IPYSV7S2Z86UNU1CQCIVXHHQG1AD',
+    ETHERSCAN_API_KEY: 'Enter Your API Here',
     NETWORK: 'Sepolia',
     // Default chain ID for Sepolia
     CHAIN_ID: 11155111
